@@ -6,6 +6,7 @@ router.get('/',function(req,res,next){
 })
 
 router.post('/',function(req,res){
+    req.session.user = req.body.email;
     res.redirect('/restringida')
 })
 

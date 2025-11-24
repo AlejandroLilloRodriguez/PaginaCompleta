@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registrarseRouter = require('./routes/registrarse');
 var restringidaRouter = require('./routes/restringida');
+var session = require('express-session');
 
 var app = express();
 
@@ -21,10 +22,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'clave-super-secreta',
+  resave: false,
+  saveUninitialized: false
+}))
+
+function middleWare(req,res,next){
+  if(req.session.user){
+    next();
+  }else{
+    res.redirect('/registrarse');
+  }
+}
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/registrarse',registrarseRouter);
-app.use('/restringida',restringidaRouter);
+app.use('/restringida',middleWare,restringidaRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
