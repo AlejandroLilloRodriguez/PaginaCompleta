@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var registrarseRouter = require('./routes/registrarse');
 var restringidaRouter = require('./routes/restringida');
 var logoutRouter = require('./routes/logout')
+var chatRouter = require('./routes/chat')
 var session = require('express-session');
 
 var app = express();
@@ -47,6 +48,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/registrarse',registrarseRouter);
 app.use('/restringida',middleWare,restringidaRouter);
+app.use('/chat',middleWare,chatRouter)
 app.use('/logout',logoutRouter);
 
 
