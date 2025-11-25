@@ -28,18 +28,27 @@ app.use(session({
   saveUninitialized: false
 }))
 
+
 function middleWare(req,res,next){
-  if(req.session.user){
+  if(req.session.user === 'admin@admin'){
     next();
   }else{
     res.redirect('/registrarse');
   }
 }
 
+app.use((req,res,next)=>{
+  res.locals.user = req.session.user || null;
+  next()
+})
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/registrarse',registrarseRouter);
 app.use('/restringida',middleWare,restringidaRouter);
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
