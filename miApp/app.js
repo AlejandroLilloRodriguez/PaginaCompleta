@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registrarseRouter = require('./routes/registrarse');
 var restringidaRouter = require('./routes/restringida');
+var logoutRouter = require('./routes/logout')
 var session = require('express-session');
 
 var app = express();
@@ -46,6 +47,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/registrarse',registrarseRouter);
 app.use('/restringida',middleWare,restringidaRouter);
+app.use('/logout',logoutRouter);
 
 
 
